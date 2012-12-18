@@ -35,7 +35,7 @@ public class HTTPLog4jAppenderTest
     {
     LogLog.setInternalDebugging( true );
     Logger root = Logger.getRootLogger();
-    root.setLevel( Level.INFO );
+    root.setLevel( Level.DEBUG );
     root.addAppender( new ConsoleAppender(
       new PatternLayout( PatternLayout.TTCC_CONVERSION_PATTERN ) ) );
 
