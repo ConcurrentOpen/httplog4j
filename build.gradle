@@ -17,23 +17,54 @@
  *  limitations under the License.
  */
 
+apply from: './etc/properties.gradle'
+
 subprojects {
   apply plugin: 'java'
   apply plugin: 'idea'
+  apply plugin: 'maven'
 
-  version = '1.0'
+  version = '0.8'
 
   repositories {
     mavenCentral()
   }
 
   dependencies {
-    compile 'log4j:log4j:1.2.+'
-    testCompile 'junit:junit:4.+'
+    compile 'log4j:log4j:1.2.17'
+    testCompile 'junit:junit:4.11'
   }
+
+  uploadArchives {
+
+     repositories.mavenDeployer {
+       configuration = configurations.archives
+
+       repository( url: repoUrl ) {
+         authentication( userName: repoUserName, password: repoPassword )
+       }
+
+       pom.project {
+         description 'A bridge to publish log4j messages to a remote server over http'
+         inceptionYear '2012'
+         url 'http://www.concurrentinc.com/'
+         scm {
+           url 'https://github.com/ConcurrentOpen/httplog4j.git'
+         }
+         licenses {
+           license {
+             name 'The Apache Software License, Version 2.0'
+             url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+             distribution 'repo'
+           }
+         }
+       }
+     }
+   }
+
   project( ':client' ) {
     dependencies {
-      compile 'org.apache.httpcomponents:httpclient:4.+'
+      compile 'org.apache.httpcomponents:httpclient:4.2.2'
     }
   }
 
@@ -41,7 +72,7 @@ subprojects {
 
     apply plugin: 'war'
     dependencies {
-      providedCompile "javax.servlet:javax.servlet-api:3.0.+"    }
+      providedCompile "javax.servlet:javax.servlet-api:3.0.1"    }
   }
 
 }
