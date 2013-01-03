@@ -18,6 +18,8 @@
 
 
 
+
+
 apply from: './etc/properties.gradle'
 
 subprojects {
@@ -36,38 +38,37 @@ subprojects {
     testCompile 'junit:junit:4.11'
   }
 
-  uploadArchives {
-
-    repositories.mavenDeployer {
-      configuration = configurations.archives
-
-      repository( url: repoUrl ) {
-        authentication( userName: repoUserName, password: repoPassword )
-      }
-
-      pom.project {
-        description 'A bridge to publish log4j messages to a remote server over http'
-        inceptionYear '2012'
-        url 'http://www.concurrentinc.com/'
-        scm {
-          url 'https://github.com/ConcurrentOpen/httplog4j.git'
-        }
-        licenses {
-          license {
-            name 'The Apache Software License, Version 2.0'
-            url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-            distribution 'repo'
-          }
-        }
-      }
-    }
-  }
-
   project( ':client' ) {
     dependencies {
       compile 'org.apache.httpcomponents:httpclient:4.2.2'
     }
     archivesBaseName = 'httplog4j-client'
+    uploadArchives {
+
+      repositories.mavenDeployer {
+        configuration = configurations.archives
+
+        repository( url: repoUrl ) {
+          authentication( userName: repoUserName, password: repoPassword )
+        }
+
+        pom.project {
+          description 'A bridge to publish log4j messages to a remote server over http'
+          inceptionYear '2012'
+          url 'http://www.concurrentinc.com/'
+          scm {
+            url 'https://github.com/ConcurrentOpen/httplog4j.git'
+          }
+          licenses {
+            license {
+              name 'The Apache Software License, Version 2.0'
+              url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+              distribution 'repo'
+            }
+          }
+        }
+      }
+    }
   }
 
   project( ':server' ) {
